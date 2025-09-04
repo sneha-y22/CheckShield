@@ -1,6 +1,8 @@
-import { motion } from "framer-motion";
-import { Phone, ShieldCheck, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { ShieldCheck, Loader2 } from "lucide-react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function PhoneCheck() {
   const [phone, setPhone] = useState("");
@@ -59,20 +61,58 @@ export default function PhoneCheck() {
       </div>
 
       {result && (
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="mt-8 bg-white shadow-md rounded-2xl p-6 w-full max-w-lg text-center"
-        >
-          <ShieldCheck className="w-10 h-10 text-indigo-600 mx-auto mb-3" />
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">Result</h2>
-          <p className="text-gray-600">{result.verdict}</p>
-          <div className="mt-4 flex justify-around">
-            <div className="text-green-600 font-bold">Safe: {result.safe}%</div>
-            <div className="text-red-600 font-bold">Scam: {result.scam}%</div>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="mt-8 bg-white shadow-md rounded-2xl p-6 w-full max-w-lg text-center"
+      >
+        <ShieldCheck className="w-10 h-10 text-indigo-600 mx-auto mb-3" />
+        <h2 className="text-lg font-semibold text-gray-800 mb-6">Result</h2>
+
+        <div className="flex justify-center items-center gap-10">
+          {/* Safe Circle */}
+          <div className="w-28">
+            <CircularProgressbar
+              value={result.safe}
+              text={`${result.safe}%`}
+              styles={buildStyles({
+                textColor: "#22c55e",
+                pathColor: "#22c55e",
+                trailColor: "#e5e7eb",
+                textSize: "16px",
+              })}
+            />
+            <span className="text-green-600 font-medium block mt-2 text-sm">Safe</span>
           </div>
-        </motion.div>
-      )}
+
+          {/* Scam Circle */}
+          <div className="w-28">
+            <CircularProgressbar
+              value={result.scam}
+              text={`${result.scam}%`}
+              styles={buildStyles({
+                textColor: "#ef4444",
+                pathColor: "#ef4444",
+                trailColor: "#e5e7eb",
+                textSize: "16px",
+              })}
+            />
+            <span className="text-red-600 font-medium block mt-2 text-sm">Scam</span>
+          </div>
+        </div>
+
+        {/* Verdict Badge */}
+        <div
+          className={`mt-6 inline-block px-5 py-2 rounded-full text-sm font-semibold ${
+            result.scam > 50
+              ? "bg-red-100 text-red-700"
+              : "bg-green-100 text-green-700"
+          }`}
+        >
+          {result.verdict}
+        </div>
+      </motion.div>
+    )}
     </div>
   );
 }
