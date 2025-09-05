@@ -6,6 +6,8 @@ import PhoneCheck from "./pages/PhoneCheck"
 import EmailCheck from "./pages/EmailCheck"
 import UrlCheck from "./pages/UrlCheck"
 import SocialCheck from "./pages/SocialCheck"
+import Reports from "./pages/Reports"
+import Community from "./pages/Community"
 import "./App.css"
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
             <Route path="/email-check" element={<EmailCheck />} />
             <Route path="/url-check" element={<UrlCheck />} />
             <Route path="/social-check" element={<SocialCheck />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/community" element={<Community />} />
           </Routes>
         </main>
         <Footer />

@@ -72,7 +72,7 @@ const Dashboard = () => {
         <div className="flex justify-center space-x-4">
           <Link
             to="/social-check"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-transform transform hover:scale-105"
+            className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:bg-purple-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-transform transform hover:scale-105"
           >
             Start Job Scan
           </Link>
