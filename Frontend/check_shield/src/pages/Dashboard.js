@@ -63,7 +63,7 @@ const Dashboard = () => {
       {/* Hero Section */}
       <div className="text-center mb-12 animate-fade-in">
         <h1 className="text-5xl font-bold text-slate-800 mb-6">
-          Smart Scans. <span className="text-indigo-600">Safer Job Hunting.</span>
+          Smart Scans. <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 text-transparent bg-clip-text">Safer Job Hunting.</span>
         </h1>
         <p className="text-xl text-white-600 mb-8 max-w-3xl mx-auto">
           Protect yourself from job scams with our AI-powered verification system. Check recruiters, job posts, and
