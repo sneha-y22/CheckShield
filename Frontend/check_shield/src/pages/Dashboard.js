@@ -62,10 +62,10 @@ const Dashboard = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero Section */}
       <div className="text-center mb-12 animate-fade-in">
-        <h1 className="text-5xl font-bold text-slate-800 mb-6">
+        <h1 className="text-5xl font-bold text-slate-800 mb-8">
           Smart Scans. <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 text-transparent bg-clip-text">Safer Job Hunting.</span>
         </h1>
-        <p className="text-xl text-white-600 mb-8 max-w-3xl mx-auto">
+        <p className="text-xl text-white-600 mb-10 max-w-3xl mx-auto">
           Protect yourself from job scams with our AI-powered verification system. Check recruiters, job posts, and
           company communications before you apply.
         </p>
@@ -83,34 +83,34 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        <FormCard className="text-center">
-          <div className="text-3xl font-bold text-slate-800">1,247</div>
-          <div className="text-sm text-slate-600 mt-1">Jobs Scanned Today</div>
-          <div className="flex items-center justify-center mt-2">
-            <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
-            <span className="text-sm text-green-600">+18% from yesterday</span>
-          </div>
-        </FormCard>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-20">
+      <FormCard className="text-center rounded-2xl shadow-md hover:shadow-lg transition-shadow p-6 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div className="text-4xl font-extrabold text-slate-800">1,247</div>
+        <div className="text-sm text-slate-600 mt-1">Jobs Scanned Today</div>
+        <div className="flex items-center justify-center mt-2">
+          <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
+          <span className="text-sm text-green-600">+18% from yesterday</span>
+        </div>
+      </FormCard>
 
-        <FormCard className="text-center">
-          <div className="text-3xl font-bold text-red-600">337</div>
-          <div className="text-sm text-slate-600 mt-1">Scams Detected</div>
-          <div className="text-sm text-slate-600 mt-2">27% of scanned jobs</div>
-        </FormCard>
+      <FormCard className="text-center rounded-2xl shadow-md hover:shadow-lg transition-shadow p-6 bg-gradient-to-br from-red-50 to-rose-50">
+        <div className="text-4xl font-extrabold text-red-600">337</div>
+        <div className="text-sm text-slate-600 mt-1">Scams Detected</div>
+        <div className="text-sm text-slate-600 mt-2">27% of scanned jobs</div>
+      </FormCard>
 
-        <FormCard className="text-center">
-          <div className="text-3xl font-bold text-green-600">910</div>
-          <div className="text-sm text-slate-600 mt-1">Job Seekers Protected</div>
-          <div className="text-sm text-slate-600 mt-2">Safe applications verified</div>
-        </FormCard>
+      <FormCard className="text-center rounded-2xl shadow-md hover:shadow-lg transition-shadow p-6 bg-gradient-to-br from-green-50 to-emerald-50">
+        <div className="text-4xl font-extrabold text-green-600">910</div>
+        <div className="text-sm text-slate-600 mt-1">Job Seekers Protected</div>
+        <div className="text-sm text-slate-600 mt-2">Safe applications verified</div>
+      </FormCard>
 
-        <FormCard className="text-center">
-          <div className="text-3xl font-bold text-indigo-600">4.8/5</div>
-          <div className="text-sm text-slate-600 mt-1">User Rating</div>
-          <div className="text-sm text-slate-600 mt-2">Based on 2,340 reviews</div>
-        </FormCard>
-      </div>
+      <FormCard className="text-center rounded-2xl shadow-md hover:shadow-lg transition-shadow p-6 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div className="text-4xl font-extrabold text-indigo-600">4.8/5</div>
+        <div className="text-sm text-slate-600 mt-1">User Rating</div>
+        <div className="text-sm text-slate-600 mt-2">Based on 2,340 reviews</div>
+      </FormCard>
+    </div>
 
       {/* Quick Scan Options */}
       <div className="mb-12">
