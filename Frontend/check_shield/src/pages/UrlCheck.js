@@ -1,78 +1,72 @@
-import { motion } from "framer-motion";
-import { Link as LinkIcon, ShieldCheck, Loader2 } from "lucide-react";
-import { useState } from "react";
+"use client"
 
-export default function UrlCheck() {
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
+import { useState } from "react"
+import { Search } from "lucide-react"
+import FormCard from "../components/FormCard"
+import ScanCard from "../components/ScanCard"
 
-  const handleCheck = () => {
-    if (!url) return;
-    setLoading(true);
-    setResult(null);
+const UrlCheck = () => {
+  const [url, setUrl] = useState("")
+  const [scanResult, setScanResult] = useState(null)
+  const [isScanning, setIsScanning] = useState(false)
 
-    // TODO: connect to backend API
+  const handleScan = async () => {
+    if (!url.trim()) return
+
+    setIsScanning(true)
+
     setTimeout(() => {
-      setResult({
-        safe: 65,
-        scam: 35,
-        verdict: "⚠️ This link looks suspicious!",
-      });
-      setLoading(false);
-    }, 2000);
-  };
+      const isScam = Math.random() > 0.6
+      const confidence = Math.floor(Math.random() * 20) + 80
+
+      setScanResult({
+        result: isScam ? "scam" : "safe",
+        confidence: confidence,
+        type: "Website URL",
+        value: url,
+        details: isScam
+          ? "Website shows signs of fraudulent job posting activities"
+          : "Website appears to be a legitimate job board or company site",
+      })
+
+      setIsScanning(false)
+    }, 2500)
+  }
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50 flex flex-col items-center px-6">
-      <motion.h1
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="text-2xl font-bold text-gray-800 mb-8"
-      >
-        URL <span className="text-indigo-600">Check</span>
-      </motion.h1>
-
-      <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-lg flex flex-col items-center">
-        <input
-          type="text"
-          placeholder="Enter website or link"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-
-        <button
-          onClick={handleCheck}
-          disabled={loading}
-          className="mt-6 bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 transition flex items-center gap-2"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              Checking...
-            </>
-          ) : (
-            "Check URL"
-          )}
-        </button>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-slate-800 mb-4">Website URL Verification</h1>
+        <p className="text-lg text-slate-600">Analyze job posting websites and company URLs for authenticity</p>
       </div>
 
-      {result && (
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="mt-8 bg-white shadow-md rounded-2xl p-6 w-full max-w-lg text-center"
-        >
-          <ShieldCheck className="w-10 h-10 text-indigo-600 mx-auto mb-3" />
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">Result</h2>
-          <p className="text-gray-600">{result.verdict}</p>
-          <div className="mt-4 flex justify-around">
-            <div className="text-green-600 font-bold">Safe: {result.safe}%</div>
-            <div className="text-red-600 font-bold">Scam: {result.scam}%</div>
-          </div>
-        </motion.div>
+      <FormCard title="Enter Website URL" description="Check if a job posting website is legitimate">
+        <div className="flex space-x-4">
+          <input
+            type="url"
+            placeholder="Enter website URL (e.g., https://example.com)"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="flex-1 px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+          />
+          <button
+            onClick={handleScan}
+            disabled={!url.trim() || isScanning}
+            className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+          >
+            <Search className="h-5 w-5" />
+            <span>{isScanning ? "Analyzing..." : "Analyze"}</span>
+          </button>
+        </div>
+      </FormCard>
+
+      {scanResult && (
+        <div className="mt-8">
+          <ScanCard {...scanResult} />
+        </div>
       )}
     </div>
-  );
+  )
 }
+
+export default UrlCheck

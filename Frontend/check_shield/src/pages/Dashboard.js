@@ -1,156 +1,188 @@
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
-import { motion } from "framer-motion";
-import { Phone, Link as LinkIcon, Mail, Users } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { Phone, Mail, LinkIcon, Users, TrendingUp, AlertTriangle } from "lucide-react"
+import Chart from "../components/Chart"
+import FormCard from "../components/FormCard"
 
-export default function Dashboard() {
-  const navigate = useNavigate();
+const Dashboard = () => {
+  // Sample data for job seeker scam detection
+  const scanData = [
+    { name: "Safe Jobs", value: 73, color: "#10b981" },
+    { name: "Scam Jobs", value: 27, color: "#ef4444" },
+  ]
 
-  // Pie Chart Data
-  const pieData = [
-    { name: "Safe", value: 70 },
-    { name: "Scam", value: 25 },
-    { name: "Other", value: 5 },
-  ];
-  const COLORS = ["#22c55e", "#ef4444", "#94a3b8"];
+  const monthlyTrends = [
+    { month: "Jan", scams: 89, safe: 312 },
+    { month: "Feb", scams: 76, safe: 345 },
+    { month: "Mar", scams: 102, safe: 298 },
+    { month: "Apr", scams: 67, safe: 378 },
+    { month: "May", scams: 94, safe: 356 },
+    { month: "Jun", scams: 58, safe: 402 },
+  ]
 
-  // Trend Data (Dummy - replace with backend later)
-  const trendData = [
-    { month: "Jan", scams: 30 },
-    { month: "Feb", scams: 45 },
-    { month: "Mar", scams: 20 },
-    { month: "Apr", scams: 50 },
-    { month: "May", scams: 40 },
-    { month: "Jun", scams: 60 },
-  ];
+  const scamCategories = [
+    { category: "Fake Job Posts", count: 156 },
+    { category: "Phishing Emails", count: 134 },
+    { category: "Fake Recruiters", count: 98 },
+    { category: "Payment Scams", count: 87 },
+    { category: "Identity Theft", count: 65 },
+  ]
 
-  // Scam Risk Level (progress bar)
-  const scamRisk = 25; // % of scam reports
-
-  const scanOptions = [
-    { icon: <Phone size={28} />, label: "Phone Check", link: "/phone" },
-    { icon: <LinkIcon size={28} />, label: "URL Check", link: "/url" },
-    { icon: <Mail size={28} />, label: "Email Check", link: "/email" },
-    { icon: <Users size={28} />, label: "Social Media", link: "/social" },
-  ];
+  const quickScanOptions = [
+    {
+      title: "Phone Verification",
+      description: "Check if recruiter phone numbers are legitimate",
+      icon: Phone,
+      path: "/phone-check",
+      color: "bg-blue-500",
+    },
+    {
+      title: "Email Verification",
+      description: "Verify job offer emails and recruiter addresses",
+      icon: Mail,
+      path: "/email-check",
+      color: "bg-green-500",
+    },
+    {
+      title: "Job Site Check",
+      description: "Analyze job posting websites for authenticity",
+      icon: LinkIcon,
+      path: "/url-check",
+      color: "bg-purple-500",
+    },
+    {
+      title: "Social Media Check",
+      description: "Verify LinkedIn/Instagram job posts and profiles",
+      icon: Users,
+      path: "/social-check",
+      color: "bg-indigo-500",
+    },
+  ]
 
   return (
-    <div className="pt-24 px-6 min-h-screen bg-gray-50 flex flex-col items-center">
-      {/* ✅ Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16"
-      >
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-          Smart Scans. <span className="text-indigo-600">Safer Clicks.</span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Section */}
+      <div className="text-center mb-12 animate-fade-in">
+        <h1 className="text-5xl font-bold text-slate-800 mb-6">
+          Smart Scans. <span className="text-indigo-600">Safer Job Hunting.</span>
         </h1>
-        <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-          Protect yourself from fraud calls, phishing links, fake job emails, and scam posts —
-          all in one place.
+        <p className="text-xl text-white-600 mb-8 max-w-3xl mx-auto">
+          Protect yourself from job scams with our AI-powered verification system. Check recruiters, job posts, and
+          company communications before you apply.
         </p>
-        <button
-          onClick={() => navigate("/social")}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-xl shadow hover:bg-indigo-700 transition"
-        >
-          Start Scanning
-        </button>
-      </motion.div>
-
-      {/* ✅ Pie Chart Section */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white shadow-md rounded-2xl p-6 w-full max-w-md mb-10"
-      >
-        <h2 className="text-lg font-semibold mb-4 text-gray-700">
-          Verification Insights
-        </h2>
-        <PieChart width={320} height={280}>
-          <Pie data={pieData} cx="50%" cy="50%" outerRadius={100} label dataKey="value">
-            {pieData.map((entry, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </motion.div>
-
-      {/* ✅ Scam Risk Progress Bar */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="bg-white shadow-md rounded-2xl p-6 w-full max-w-md mb-10"
-      >
-        <h2 className="text-lg font-semibold mb-4 text-gray-700">Scam Risk Level</h2>
-        <div className="w-full bg-gray-200 rounded-full h-4">
-          <div
-            className={`h-4 rounded-full ${
-              scamRisk > 50 ? "bg-red-500" : "bg-green-500"
-            }`}
-            style={{ width: `${scamRisk}%` }}
-          ></div>
-        </div>
-        <p className="text-sm text-gray-600 mt-2">
-          {scamRisk}% scam reports detected
-        </p>
-      </motion.div>
-
-      {/* ✅ Scam Trend Graph */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="bg-white shadow-md rounded-2xl p-6 w-full max-w-3xl mb-10"
-      >
-        <h2 className="text-lg font-semibold mb-4 text-gray-700">
-          Scam Trends (Last 6 Months)
-        </h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={trendData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="scams"
-              stroke="#ef4444"
-              strokeWidth={3}
-              dot={{ r: 5, fill: "#ef4444" }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </motion.div>
-
-      {/* ✅ Scan Options */}
-      <div className="grid grid-cols-2 gap-6 w-full max-w-3xl">
-        {scanOptions.map((item, idx) => (
-          <motion.div
-            key={idx}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => navigate(item.link)}
-            className="bg-white shadow-md rounded-2xl p-6 flex flex-col items-center gap-3 cursor-pointer hover:shadow-lg transition"
+        <div className="flex justify-center space-x-4">
+          <Link
+            to="/social-check"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-transform transform hover:scale-105"
           >
-            <div className="text-indigo-600">{item.icon}</div>
-            <p className="font-medium text-gray-700">{item.label}</p>
-          </motion.div>
-        ))}
+            Start Job Scan
+          </Link>
+          <button className="border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-8 py-3 rounded-lg text-lg font-semibold transition-transform transform hover:scale-105">
+            Learn More
+          </button>
+        </div>
       </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <FormCard className="text-center">
+          <div className="text-3xl font-bold text-slate-800">1,247</div>
+          <div className="text-sm text-slate-600 mt-1">Jobs Scanned Today</div>
+          <div className="flex items-center justify-center mt-2">
+            <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
+            <span className="text-sm text-green-600">+18% from yesterday</span>
+          </div>
+        </FormCard>
+
+        <FormCard className="text-center">
+          <div className="text-3xl font-bold text-red-600">337</div>
+          <div className="text-sm text-slate-600 mt-1">Scams Detected</div>
+          <div className="text-sm text-slate-600 mt-2">27% of scanned jobs</div>
+        </FormCard>
+
+        <FormCard className="text-center">
+          <div className="text-3xl font-bold text-green-600">910</div>
+          <div className="text-sm text-slate-600 mt-1">Job Seekers Protected</div>
+          <div className="text-sm text-slate-600 mt-2">Safe applications verified</div>
+        </FormCard>
+
+        <FormCard className="text-center">
+          <div className="text-3xl font-bold text-indigo-600">4.8/5</div>
+          <div className="text-sm text-slate-600 mt-1">User Rating</div>
+          <div className="text-sm text-slate-600 mt-2">Based on 2,340 reviews</div>
+        </FormCard>
+      </div>
+
+      {/* Quick Scan Options */}
+      <div className="mb-12">
+        <h2 className="text-3xl font-bold text-slate-800 text-center mb-8">Quick Job Safety Checks</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {quickScanOptions.map((option, index) => (
+            <Link key={index} to={option.path} className="group">
+              <FormCard className="h-full hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-center">
+                  <div
+                    className={`${option.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}
+                  >
+                    <option.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">{option.title}</h3>
+                  <p className="text-sm text-slate-600">{option.description}</p>
+                </div>
+              </FormCard>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <Chart type="pie" data={scanData} title="Job Scan Results Distribution" />
+        <Chart type="line" data={monthlyTrends} title="Monthly Job Scam Trends" />
+      </div>
+
+      {/* Scam Categories */}
+      <div className="mb-12">
+        <Chart type="bar" data={scamCategories} title="Top Job Scam Categories This Month" />
+      </div>
+
+      {/* Recent Alerts */}
+      <FormCard title="Recent Job Scam Alerts" description="Stay informed about the latest job scam trends">
+        <div className="space-y-4">
+          {[
+            {
+              title: "Fake Remote Work Opportunities",
+              severity: "high",
+              time: "3 hours ago",
+              description: "Scammers posting fake remote jobs requiring upfront payments for equipment",
+            },
+            {
+              title: "LinkedIn Recruiter Impersonation",
+              severity: "medium",
+              time: "1 day ago",
+              description: "Fake recruiters using stolen company logos to collect personal information",
+            },
+            {
+              title: "Cryptocurrency Job Scams",
+              severity: "high",
+              time: "2 days ago",
+              description: "Fraudulent crypto trading job offers targeting recent graduates",
+            },
+          ].map((alert, index) => (
+            <div key={index} className="flex items-start space-x-3 p-4 bg-slate-50 rounded-lg">
+              <AlertTriangle
+                className={`h-5 w-5 mt-0.5 ${alert.severity === "high" ? "text-red-500" : "text-yellow-500"}`}
+              />
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-800">{alert.title}</h4>
+                <p className="text-sm text-slate-600 mt-1">{alert.description}</p>
+                <span className="text-xs text-slate-500">{alert.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </FormCard>
     </div>
-  );
+  )
 }
+
+export default Dashboard
